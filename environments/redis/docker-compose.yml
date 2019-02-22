@@ -1,0 +1,26 @@
+version: '2.2'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: '1m'
+      max-file: '5'
+
+services:
+
+  redis:
+    image: redis
+    hostname: redis
+    ports:
+      - "26379:6379"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+      - ./redis_data/:/data/
+
+  redis-ui:
+    image: marian/rebrow
+    hostname: redis-ui
+    ports:
+      - "25001:5001"
