@@ -14,21 +14,12 @@ while [[ $# -gt 0 ]]
 do
     key="$1"
     case $key in
-        -N|-n|-name)
+        -N|-n|-name|-C|-c|--container)
         CONTAINER_NAME="$2"
         shift
         shift
         ;;
-        --name=*)
-        CONTAINER_NAME="${1#*=}"
-        shift
-        ;;
-        -C|-c|--container)
-        CONTAINER_NAME="$2"
-        shift
-        shift
-        ;;
-        --container=*)
+        --name=*|--container=*)
         CONTAINER_NAME="${1#*=}"
         shift
         ;;
@@ -66,7 +57,7 @@ IMAGE="${IMAGE_NAME}:${IMAGE_VERSION}"
 
 if [ -z "${CONTAINER_NAME}" ]
 then
-  CONTAINER_NAME=IMAGE
+  CONTAINER_NAME="${IMAGE_NAME}"
 fi
 
 echo "$(date +%c): Running Container ${CONTAINER_NAME} of image ${IMAGE}"
