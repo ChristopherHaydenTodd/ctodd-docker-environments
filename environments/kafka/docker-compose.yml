@@ -24,8 +24,8 @@ services:
         ZOO_PORT: 2181
         ZOO_SERVERS: server.1=zookeeper-1:2888:3888
     volumes:
-      - ./volumes/zookeeper-1/data:/data
-      - ./volumes/zookeeper-1/datalog:/datalog
+      - ./zookeeper-1/data:/data
+      - ./zookeeper-1/datalog:/datalog
 
   kafka-broker-1:
     image: confluentinc/cp-kafka:5.0.0
@@ -41,7 +41,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_ZOOKEEPER_CONNECT: "zookeeper-1:2181"
     volumes:
-      - ./volumes/kafka-broker-1/data:/var/lib/kafka/data
+      - ./kafka-broker-1/data:/var/lib/kafka/data
     depends_on:
       - zookeeper-1
 
@@ -89,7 +89,7 @@ services:
       - kafka-schema-registry
       - zookeeper-1
     volumes:
-      - ./volumes/kafka-connect/:/tmp/kafka/
+      - ./kafka-connect/:/tmp/kafka/
 
   kafka-schema-registry:
     image: confluentinc/cp-schema-registry:5.0.0
