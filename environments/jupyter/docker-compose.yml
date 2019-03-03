@@ -1,0 +1,20 @@
+version: '2.2'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: '1m'
+      max-file: '5'
+
+services:
+
+  base-notebook:
+    image: jupyter/base-notebook
+    hostname: jupyter
+    ports:
+      - "11111:8888"
+    volumes:
+      - ./base-notebook/jupyter_workspace:/home/jovyan/work
+
