@@ -1,0 +1,55 @@
+version: '2.2'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: '1m'
+      max-file: '5'
+
+services:
+
+ minio-node-1:
+  image: minio/minio
+  volumes:
+    - ./minio-node-1/data:/export
+  ports:
+    - "29001:9000"
+  environment:
+    MINIO_ACCESS_KEY:
+    MINIO_SECRET_KEY:
+  command: server http://minio-node-{1...4}/export
+
+ minio-node-2:
+  image: minio/minio
+  volumes:
+    - ./minio-node-2/data:/export
+  ports:
+    - "29002:9000"
+  environment:
+    MINIO_ACCESS_KEY:
+    MINIO_SECRET_KEY:
+  command: server http://minio-node-{1...4}/export
+
+ minio-node-3:
+  image: minio/minio
+  volumes:
+   - ./minio-node-3/data:/export
+  ports:
+   - "29003:9000"
+  environment:
+    MINIO_ACCESS_KEY:
+    MINIO_SECRET_KEY:
+  command: server http://minio-node-{1...4}/export
+
+ minio-node-4:
+  image: minio/minio
+  volumes:
+    - ./minio-node-4/data:/export
+  ports:
+    - "29004:9000"
+  environment:
+    MINIO_ACCESS_KEY:
+    MINIO_SECRET_KEY:
+  command: server http://minio-node-{1...4}/export
