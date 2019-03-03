@@ -1,0 +1,23 @@
+version: "2.2"
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: "1m"
+      max-file: "5"
+
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_NODENAME: "rabbitmq"
+      RABBITMQ_DEFAULT_USER:
+      RABBITMQ_DEFAULT_PASS:
+    ports:
+      - "30000:4369"
+      - "30001:5671"
+      - "30002:5672"
+      - "30003:15672"
