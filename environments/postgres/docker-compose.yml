@@ -1,0 +1,29 @@
+version: '2.2'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: '1m'
+      max-file: '5'
+
+services:
+
+  postgres:
+    image: postgres
+    hostname: postgres
+    ports:
+      - "15432:5432"
+    volumes:
+      - ./postgres/pgdata:/var/lib/postgresql/data
+    environment:
+      PGDATA: "/var/lib/postgresql/data"
+      POSTGRES_DB: "docker"
+      POSTGRES_PASSWORD:
+      POSTGRES_USER:
+
+  adminer:
+    image: adminer
+    ports:
+      - "28080:8080"
