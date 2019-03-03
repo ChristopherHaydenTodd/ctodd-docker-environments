@@ -1,0 +1,28 @@
+version: '2.2'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: '1m'
+      max-file: '5'
+
+services:
+
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: docker
+      MYSQL_PASSWORD:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_USER:
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./mysql/mysql_data:/var/lib/mysql
+
+  adminer:
+    image: adminer
+    ports:
+      - "28080:8080"
