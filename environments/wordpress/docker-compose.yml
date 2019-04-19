@@ -1,0 +1,35 @@
+version: '2.2'
+
+x-defaults: &defaults
+  restart: unless-stopped
+  logging:
+    driver: json-file
+    options:
+      max-size: '1m'
+      max-file: '5'
+
+services:
+
+  wordpress-db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_PASSWORD:
+      MYSQL_ROOT_PASSWORD:
+      MYSQL_USER: wordpress
+    ports:
+      - "43306:3306"
+    volumes:
+       - ./wordpress-db/mysql_data:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:latest
+    environment:
+      WORDPRESS_DB_HOST: wordpress-db:3306
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_PASSWORD:
+      WORDPRESS_DB_USER: wordpress
+    ports:
+      - "9876:80"
+    depends_on:
+      - wordpress-db
